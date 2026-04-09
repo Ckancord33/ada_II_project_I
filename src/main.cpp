@@ -1,7 +1,19 @@
 #include <iostream>
-using namespace std;
+#include "Farm.h"
 
-int main(){
-  cout << "Hello world" << endl;
+int main()
+{
+  vector<Plot> plots = {
+      Plot(10, 3, 4, 0),
+      Plot(6, 3, 3, 1),
+      Plot(2, 2, 1, 0),
+      Plot(8, 1, 1, 6),
+      Plot(10, 4, 2, 5)};
+  
+  Farm farm = Farm(plots);
+
+  vector<int> plots_order = {2, 1, 4, 3, 0};
+
+  cout << "El costo total es: " << farm.calc_total_cost(plots_order) << endl;
   return 0;
 }
