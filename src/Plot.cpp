@@ -1,17 +1,17 @@
 #include "Plot.h"
 
 /*
-  ts  -> survival_time (tiempo de supervivencia)
+  ts  -> tiempo de supervivencia
     - tiempo máximo que puede pasar sin regar antes de perderse.
 
-  tr  -> watering_time (tiempo de regado / duración del riego)
+  tr  -> tiempo de regado / duración del riego
     - cuánto dura el riego necesario para el tablón.
 
-  p   -> priority (prioridad del tablón)
+  p   -> prioridad del tablón
     - peso/penalización para retrasos en el riego; afecta el costo.
 
-  rp  -> ideal_watering_time (tiempo de riego perfecto)
-    - instante ideal para regar (mínimo coste).
+  rp  -> tiempo de riego perfecto
+    - instante ideal para regar.
 */
 
 Plot::Plot(int ts, int tr, int p, int rp) : ts(ts), tr(tr), p(p), rp(rp) {};
