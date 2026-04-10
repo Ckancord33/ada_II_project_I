@@ -22,8 +22,15 @@ int main()
 
   vector<int> plots_order = {2, 1, 4, 3, 0};
 
-  cout << "La programacion queda: "; 
+  cout << "-------------Ejemplo del enunciado-----------------\n" << endl;
+  cout << "Para el orden: "; 
   print(farm.calc_schedule(plots_order));
   cout << "El costo es: " << farm.calc_total_cost(plots_order) << endl;
+
+  cout << "\n--------Mejor solucion con fuerza bruta----------\n" << endl;
+  tuple<int, vector<int>> solution = farm.naive_solution();
+  cout << "El mejor costo es: " << get<0>(solution) << endl;
+  cout << "La solucion es: ";
+  print(get<1>(solution));
   return 0;
 }
