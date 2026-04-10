@@ -1,4 +1,5 @@
 #include "Farm.h"
+#include <climits>
 
 Farm::Farm(vector<Plot> plots) : plots(plots) {}
 
@@ -66,7 +67,7 @@ tuple<int, vector<int>> Farm::naive_solution(){
   int n = plots.size();
   vector<vector<int>> all_orders = get_permutations(n);
   vector<int> best_solution;
-  int best_cost;
+  int best_cost = INT_MAX;
   for(vector<int> order : all_orders){
     int new_cost = calc_total_cost(order);
     if(new_cost < best_cost){

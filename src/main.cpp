@@ -11,6 +11,7 @@ void print(vector<int> x){
 
 int main()
 {
+  //instancia del enunciado
   vector<Plot> plots = {
       Plot(10, 3, 4, 0),
       Plot(6, 3, 3, 1),
@@ -20,17 +21,23 @@ int main()
   
   Farm farm = Farm(plots);
 
-  vector<int> plots_order = {2, 1, 4, 3, 0};
+  //Ejemplos del enunciado
+  vector<int> plots_order_I = {2, 1, 4, 3, 0};
+  vector<int> plots_order_II = {0, 1, 4, 2, 3};
 
   cout << "-------------Ejemplo del enunciado-----------------\n" << endl;
   cout << "Para el orden: "; 
-  print(farm.calc_schedule(plots_order));
-  cout << "El costo es: " << farm.calc_total_cost(plots_order) << endl;
+  print(plots_order_I);
+  cout << "El costo es: " << farm.calc_total_cost(plots_order_I) << endl;
+
+  cout << "\nPara el orden: "; 
+  print(plots_order_II);
+  cout << "El costo es: " << farm.calc_total_cost(plots_order_II) << endl;
 
   cout << "\n--------Mejor solucion con fuerza bruta----------\n" << endl;
   tuple<int, vector<int>> solution = farm.naive_solution();
-  cout << "El mejor costo es: " << get<0>(solution) << endl;
-  cout << "La solucion es: ";
+    cout << "La solucion es: ";
   print(get<1>(solution));
+  cout << "El costo es: " << get<0>(solution) << endl;
   return 0;
 }
