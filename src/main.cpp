@@ -1,6 +1,14 @@
 #include <iostream>
 #include "Farm.h"
 
+void print(vector<int> x){
+  cout << "{ ";
+  for(int i : x){
+    cout << i << " ";
+  }
+  cout << " }" << endl;
+}
+
 int main()
 {
   vector<Plot> plots = {
@@ -14,6 +22,8 @@ int main()
 
   vector<int> plots_order = {2, 1, 4, 3, 0};
 
-  cout << "El costo total es: " << farm.calc_total_cost(plots_order) << endl;
+  cout << "La programacion queda: "; 
+  print(farm.calc_schedule(plots_order));
+  cout << "El costo es: " << farm.calc_total_cost(plots_order) << endl;
   return 0;
 }

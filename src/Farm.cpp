@@ -2,15 +2,17 @@
 
 Farm::Farm(vector<Plot> plots) : plots(plots) {}
 
+//Calcula el tiempo en el que se inicia cada tablon
 vector<int> Farm::calc_schedule(vector<int> plots_order)
 {
   int n = plots_order.size();
   vector<int> schedule(n, 0);
+  int time = 0;
   for (int i = 0; i < n; i++)
   {
     int idx = plots_order[i];
-    int before = (i > 0) ? schedule[i - 1] : 0;
-    schedule[i] = plots[idx].get_tr() + before;
+    schedule[idx] = time;
+    time += plots[idx].get_tr();
   }
   return schedule;
 }
