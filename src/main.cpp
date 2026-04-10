@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Farm.h"
+#include "Loader.h"
 
 void print(vector<int> x){
   cout << "{ ";
@@ -11,15 +12,8 @@ void print(vector<int> x){
 
 int main()
 {
-  //instancia del enunciado
-  vector<Plot> plots = {
-      Plot(10, 3, 4, 0),
-      Plot(6, 3, 3, 1),
-      Plot(2, 2, 1, 0),
-      Plot(8, 1, 1, 6),
-      Plot(10, 4, 2, 5)};
   
-  Farm farm = Farm(plots);
+  Farm farm = load("../input/input1.txt");
 
   //Ejemplos del enunciado
   vector<int> plots_order_I = {2, 1, 4, 3, 0};
