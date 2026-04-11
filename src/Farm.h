@@ -2,6 +2,7 @@
 #include "Plot.h"
 #include <tuple>
 #include <vector>
+#include <cmath>
 
 class Farm
 {
@@ -18,4 +19,9 @@ public:
   void generate(vector<int>, vector<int>, vector<vector<int>>&);
   vector<vector<int>> get_permutations(int);
   tuple<int, vector<int>> naive_solution();
+  int calc_total_subset_time(int bitmask);
+  int auxiliar(int, vector<int>&);
+  tuple<int, vector<int>> dynamic_solution();
+
+
 };
