@@ -1,37 +1,22 @@
 #include <iostream>
 #include "Farm.h"
-#include "Loader.h"
-
-void print(vector<int> x){
-  cout << "{ ";
-  for(int i : x){
-    cout << i << " ";
-  }
-  cout << " }" << endl;
-}
+#include "Utils.h"
 
 int main()
 {
-  
-  Farm farm = load("../input/input1.txt");
 
-  //Ejemplos del enunciado
-  vector<int> plots_order_I = {2, 1, 4, 3, 0};
-  vector<int> plots_order_II = {0, 1, 4, 2, 3};
+  print_examples(); //Muestra la correctitud del codigo con los ejemplos del enunciado
 
-  cout << "-------------Ejemplo del enunciado-----------------\n" << endl;
-  cout << "Para el orden: "; 
-  print(plots_order_I);
-  cout << "El costo es: " << farm.calc_total_cost(plots_order_I) << endl;
-
-  cout << "\nPara el orden: "; 
-  print(plots_order_II);
-  cout << "El costo es: " << farm.calc_total_cost(plots_order_II) << endl;
+  Farm farm = load("../input/input2.txt");
 
   cout << "\n--------Mejor solucion con fuerza bruta----------\n" << endl;
-  tuple<int, vector<int>> solution = farm.naive_solution();
-    cout << "La solucion es: ";
-  print(get<1>(solution));
-  cout << "El costo es: " << get<0>(solution) << endl;
+  auto solution_and_time = take_time([&]{ return farm.naive_solution(); });
+
+  auto [solution, time] = solution_and_time; // desempaqueta la tupla externa
+  auto [cost, order] = solution;              // desempaqueta la tupla interna
+
+  cout << "La solucion es: "; print(order);
+  cout << "El costo es: " << cost << endl;
+  cout << "El tiempo fue: " << time << " microsegundos" << endl;
   return 0;
 }
