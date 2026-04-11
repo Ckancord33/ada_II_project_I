@@ -8,7 +8,7 @@
 
 Farm load(string);
 
-void print(vector<int>);
+void print_vector(vector<int>);
 
 void print_examples();
 
