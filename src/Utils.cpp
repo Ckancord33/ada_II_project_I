@@ -89,8 +89,7 @@ void print_examples()
   vector<int> f1_plots_order_I = {2, 1, 4, 3, 0};
   vector<int> f1_plots_order_II = {0, 1, 4, 2, 3};
 
-  cout << "-------------Ejemplo del enunciado 1-----------------\n"
-       << endl;
+  cout << "-------------Ejemplo del enunciado 1-----------------\n" << endl;
   cout << "Para la finca: ≪ 10, 3, 4, 0 >, < 6, 3, 3, 1 >, < 2, 2, 1, 0 >, < 8, 1, 1, 6 >, < 10, 4, 2, 5 ≫" << endl;
   cout << "Usando el orden: ";
   print_vector(f1_plots_order_I);
@@ -103,8 +102,7 @@ void print_examples()
   vector<int> f2_plots_order_I = {2, 1, 4, 3, 0};
   vector<int> f2_plots_order_II = {2, 1, 4, 0, 3};
 
-  cout << "-------------Ejemplo del enunciado 2-----------------\n"
-       << endl;
+  cout << "-------------Ejemplo del enunciado 2-----------------\n" << endl;
   cout << "Para la finca: ≪ 9, 3, 4, 0 >, < 5, 3, 3, 2 >, < 2, 2, 1, 0 >, < 8, 1, 1, 6 >, < 6, 4, 2, 1 ≫" << endl;
   cout << "Usando el orden: ";
   print_vector(f2_plots_order_I);

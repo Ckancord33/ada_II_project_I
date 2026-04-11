@@ -9,10 +9,8 @@ int main()
 
   Farm farm = load("../input/input2.txt");
 
-  cout << "\n--------Mejor solucion con fuerza bruta----------\n"
-       << endl;
-  auto solution_and_time = take_time([&]
-                                     { return farm.naive_solution(); });
+  cout << "\n--------Mejor solucion con fuerza bruta----------\n" << endl;
+  auto solution_and_time = take_time([&]{ return farm.naive_solution(); });
 
   auto [solution, time] = solution_and_time; // desempaqueta la tupla externa
   auto [cost, order] = solution;             // desempaqueta la tupla interna
