@@ -121,6 +121,31 @@ int Farm::auxiliar_top_down(int bitmask, vector<int> &memo, unordered_map<int, p
   return memo[bitmask];
 }
 
+void Farm::build_solution_top_down(int bitmask, vector<int> &memo, unordered_map<int, pair<int, vector<int>>> &dictionary_bits, vector<int> &solution)
+{
+  if (bitmask == 0)
+  {
+    return;
+  }
+  int idx = -1;
+  int min_cost = INT_MAX;
+  int best_bitmask = -1;
+  for (int i : dictionary_bits.at(bitmask).second)
+  {
+    int new_bitmask = bitmask & ~(1 << i);
+    int time = calc_total_subset_time(new_bitmask);
+    int cost = memo[new_bitmask] + plots[i].calc_cost(time);
+    if (cost < min_cost)
+    {
+      min_cost = cost;
+      idx = i;
+      best_bitmask = new_bitmask;
+    }
+  }
+  solution.insert(solution.begin(), idx);
+  build_solution_top_down(best_bitmask, memo, dictionary_bits, solution);
+}
+
 tuple<int, vector<int>> Farm::dynamic_solution_top_down()
 {
   int n = plots.size();
@@ -133,7 +158,9 @@ tuple<int, vector<int>> Farm::dynamic_solution_top_down()
   }
   int init_bitmask = (1 << plots.size()) - 1;
   int best_cost = auxiliar_top_down(init_bitmask, memo, dictionary_bits);
-  return tuple<int, vector<int>>(best_cost, {});
+  vector<int> solution;
+  build_solution_top_down(init_bitmask, memo, dictionary_bits, solution);
+  return tuple<int, vector<int>>(best_cost, solution);
 }
 
 unordered_map<int, pair<int, vector<int>>> get_dictionary_bits(int n)
@@ -239,7 +266,7 @@ vector<int> build_solution(vector<vector<int>> path, int lastPos, int row)
   return solution;
 }
 
-tuple<int, vector<int>> Farm::dynamic_programming_solution()
+tuple<int, vector<int>> Farm::dynamic_solution_bottom_up()
 {
 
   int n = plots.size();
