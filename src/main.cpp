@@ -49,7 +49,7 @@ int main()
   
 
     cout << "\n--------Mejor solucion con programación dinamica----------\n" << endl;
-  auto solution_and_time_dp = take_time([&]{ return farm.dynamic_programming_solution(); });
+  auto solution_and_time_dp = take_time([&]{ return farm.dynamic_solution_top_down(); });
 
   auto [solution_dp, time_dp] = solution_and_time_dp; // desempaqueta la tupla externa
   auto [cost_dp, order_dp] = solution_dp;             // desempaqueta la tupla interna
