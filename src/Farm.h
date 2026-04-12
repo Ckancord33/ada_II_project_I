@@ -2,6 +2,11 @@
 #include "Plot.h"
 #include <tuple>
 #include <vector>
+#include <climits>
+#include <unordered_map>
+#include <iostream>
+#include <algorithm> 
+#include <cmath>
 
 class Farm
 {
@@ -18,4 +23,6 @@ public:
   void generate(vector<int>, vector<int>, vector<vector<int>>&);
   vector<vector<int>> get_permutations(int);
   tuple<int, vector<int>> naive_solution();
+  void fill_cost_matrix(vector<vector<int>>&, const unordered_map<int, pair<int, vector<int>>>& , int, vector<vector<int>>&) ;
+  tuple<int, vector<int>> dynamic_programming_solution();
 };
