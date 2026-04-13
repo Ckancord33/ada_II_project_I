@@ -32,8 +32,8 @@ public:
 
   //Acercamiento Top - Down
   int calc_total_subset_time(int);
-  int auxiliar_top_down(int, vector<int> &, unordered_map<int, pair<int, vector<int>>> &);
-  void build_solution_top_down(int, vector<int>&, unordered_map<int, pair<int, vector<int>>>&, vector<int>&);
+  int auxiliar_top_down(int, vector<int> &);
+  void build_solution_top_down(int, vector<int>&, vector<int>&);
   tuple<int, vector<int>> dynamic_solution_top_down();
 
   //Acercamiento Bottom - Up

@@ -50,10 +50,6 @@ Farm load(string path)
     }
     plots.push_back(parsePlot(line));
   }
-  if (getline(file, line))
-  {
-    throw runtime_error("More than '" + to_string(n) + "' lines defined");
-  }
 
   return Farm(plots);
 }
