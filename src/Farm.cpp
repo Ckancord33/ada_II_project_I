@@ -119,7 +119,7 @@ void Farm::fill_cost_matrix(vector<vector<int>>& cost_matrix, int row, vector<ve
       cost_matrix[i][pos1] = cost_matrix[mask_only_p0][pos0] + plots[pos1].calc_cost(plots[pos0].get_tr());
       temp_total_matrix[i] = temp_total_matrix[mask_only_p1] + temp_total_matrix[mask_only_p0];
       path[i][pos0] = pos1;
-      path[i][pos0] = pos1;
+      path[i][pos1] = pos0;
 
     }else{
 

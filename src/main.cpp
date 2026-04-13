@@ -28,8 +28,6 @@ int main()
 
   Farm farm = load("../input/input5.txt");
 
-  
-
     cout << "\n--------Mejor solucion con programación dinamica----------\n" << endl;
   auto solution_and_time_dp = take_time([&]{ return farm.dynamic_programming_solution(); });
 
@@ -41,7 +39,7 @@ int main()
   cout << "El costo es: " << cost_dp << endl;
   cout << "El tiempo fue: " << time_dp << " microsegundos" << endl;
 
-  cout << "\n--------Mejor solucion con fuerza bruta----------\n" << endl;
+ /*  cout << "\n--------Mejor solucion con fuerza bruta----------\n" << endl;
   auto solution_and_time_brute = take_time([&]{ return farm.naive_solution(); });
 
   auto [solution_brute, time_brute] = solution_and_time_brute; // desempaqueta la tupla externa
@@ -51,6 +49,6 @@ int main()
   print_vector(order_brute);
   cout << "El costo es: " << cost_brute << endl;
   cout << "El tiempo fue: " << time_brute << " microsegundos" << endl;
-
+ */
   return 0;
 }
