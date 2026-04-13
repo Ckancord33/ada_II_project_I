@@ -1,6 +1,6 @@
 #include "Farm.h"
 
-int inf = numeric_limits<int>::max();
+int inf = INT_MAX;
 
 Farm::Farm(vector<Plot> plots) : plots(plots) {}
 
@@ -81,69 +81,53 @@ tuple<int, vector<int>> Farm::naive_solution(){
 }
 
 
-unordered_map<int, pair<int, vector<int>>> get_dictionary_bits(int n){
-
-  unordered_map<int, pair<int, vector<int>>> dict;
-    
-  dict.reserve(n + 1);
-
-  int temp = 0;
-  int count = 0;
-  int pos = 0;
-
-  for (int i = 0; i < n; ++i) {
-      temp = i;
-      count = 0;                             
-      vector<int> positions;
-        while (temp > 0) {
-            pos = __builtin_ctz(temp);
-            positions.push_back(pos);
-            count++;
-            temp &= (temp - 1);
-        }
-        
-        dict[i] = {count, positions};
-    }
-    
-    return dict;
+pair<int,int> get_min_and_index(const vector<int>& row_cost_matrix){
+  int min = inf;
+  int index = 0;
+  for (int i = 0; i < row_cost_matrix.size();i++){
+      if (row_cost_matrix[i] < min){
+        min = row_cost_matrix[i];
+        index = i;
+      }
+  }
+  return pair<int,int>(min,index);
 }
 
 
-void Farm::fill_cost_matrix(vector<vector<int>>& cost_matrix, const unordered_map<int, pair<int,
-   vector<int>>>& dictionary_bits, int row, vector<vector<int>>& path){
-
-  int qAct = 0;
-  vector<int> positionAct;
-  int minCost = 0;
-  vector<int> vecRowAct;
+void Farm::fill_cost_matrix(vector<vector<int>>& cost_matrix, int row, vector<vector<int>>& path){
 
   vector<int> temp_total_matrix(row);
-
-  int temp = 0;
-
   bool firstTime = true;
+  int pos = 0,pos0 = 0,pos1 = 0, temp = 0,  qAct = 0, mask_only_p1 = 0,mask_only_p0 =0;
 
-  int index = 0;
 
   for(int i = 1; i < row; i++){
-    qAct = dictionary_bits.at(i).first;
-    positionAct = dictionary_bits.at(i).second;
+    qAct = __builtin_popcount(i);
     if (qAct == 1){
-      cost_matrix[i][positionAct[0]] = plots[positionAct[0]].calc_cost(0);
-      temp_total_matrix[i] =  plots[positionAct[0]].get_tr();
+
+      pos = __builtin_ctz(i);
+      cost_matrix[i][pos] = plots[pos].calc_cost(0);
+      temp_total_matrix[i] =  plots[pos].get_tr();
+
     }else if (qAct == 2){
-      cost_matrix[i][positionAct[0]] = cost_matrix[i & (1 << positionAct[1])][positionAct[1]] + plots[positionAct[0]].calc_cost(plots[positionAct[1]].get_tr());
-      cost_matrix[i][positionAct[1]] = cost_matrix[i & (1 << positionAct[0])][positionAct[0]] + plots[positionAct[1]].calc_cost(plots[positionAct[0]].get_tr());
-      temp_total_matrix[i] = temp_total_matrix[i & (1 << positionAct[1])] + temp_total_matrix[i & (1 << positionAct[0])];
-      path[i][positionAct[0]] = positionAct[1];
-      path[i][positionAct[1]] = positionAct[0];
+
+      pos0 = __builtin_ctz(i);
+      pos1 = __builtin_ctz(i & (i - 1));
+      mask_only_p1 = i & (1 << pos1);
+      mask_only_p0 = i & (1 << pos0);
+      cost_matrix[i][pos0] = cost_matrix[mask_only_p1][pos1] + plots[pos0].calc_cost(plots[pos1].get_tr());
+      cost_matrix[i][pos1] = cost_matrix[mask_only_p0][pos0] + plots[pos1].calc_cost(plots[pos0].get_tr());
+      temp_total_matrix[i] = temp_total_matrix[mask_only_p1] + temp_total_matrix[mask_only_p0];
+      path[i][pos0] = pos1;
+      path[i][pos0] = pos1;
+
     }else{
+
       firstTime = true;
-      for(int pos : positionAct){
+      for(int sub = i; sub ; sub &= (sub - 1)){
+        pos = __builtin_ctz(sub);
         temp = i & ~(1 << pos);
-        vecRowAct = cost_matrix[temp];
-        minCost = *min_element(vecRowAct.begin(), vecRowAct.end());
-        index = distance(vecRowAct.begin(), find(vecRowAct.begin(), vecRowAct.end(), minCost));
+        const auto [minCost,index] = get_min_and_index(cost_matrix[temp]);
         path[i][pos] = index;
         cost_matrix[i][pos] = minCost + plots[pos].calc_cost(temp_total_matrix[temp]);
         if (firstTime){
@@ -151,6 +135,7 @@ void Farm::fill_cost_matrix(vector<vector<int>>& cost_matrix, const unordered_ma
           firstTime = false;
         }
       }
+
     }
   }
 }
@@ -177,20 +162,14 @@ tuple<int, vector<int>> Farm::dynamic_programming_solution(){
 
   int n = plots.size();
   int row = 1 << n;
-  int column = n;
 
-  vector<vector<int>> cost_matrix(row, vector<int>(column, inf));
+  vector<vector<int>> cost_matrix(row, vector<int>(n, inf));
 
-  vector<vector<int>> path(row, vector<int>(column, -1));
+  vector<vector<int>> path(row, vector<int>(n, -1));
 
-  unordered_map<int, pair<int, vector<int>>> dictionary_bits = get_dictionary_bits(row);
+  fill_cost_matrix(cost_matrix,row,path);
 
-  fill_cost_matrix(cost_matrix,dictionary_bits,row,path);
-
-  vector<int> last_row_cost_matrix = cost_matrix[row-1];
-
-  int minCost = *min_element(last_row_cost_matrix.begin(), last_row_cost_matrix.end());
-  int index = distance(last_row_cost_matrix.begin(), find(last_row_cost_matrix.begin(), last_row_cost_matrix.end(), minCost));
+  auto [minCost,index] = get_min_and_index(cost_matrix[row-1]);
 
   vector<int> solution = build_solution(path, index,row);
 

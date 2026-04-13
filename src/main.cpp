@@ -2,24 +2,6 @@
 #include "Farm.h"
 #include "Utils.h"
 
-void imprimirMapa(const unordered_map<int, pair<int, vector<int>>>& mapa) {
-    cout << "--- CONTENIDO DEL MAPA ---" << endl;
-    
-    for (const auto& [clave, valor] : mapa) {
-        cout << "Clave: [" << clave << "]" << endl;
-        cout << "  - Valor entero: " << valor.first << endl;
-        cout << "  - Lista de numeros: { ";
-        
-        const vector<int>& lista = valor.second;
-        for (size_t i = 0; i < lista.size(); ++i) {
-            cout << lista[i] << (i < lista.size() - 1 ? ", " : "");
-        }
-        
-        cout << " }" << endl;
-        cout << "--------------------------" << endl;
-    }
-}
-
 void imprimiMatrix(const vector<vector<int>> matriz){
   int number = 0;
  for (int i = 0; i < matriz.size(); i++) {
@@ -44,7 +26,7 @@ int main()
 
   //print_examples(); // Muestra la correctitud del codigo con los ejemplos del enunciado
 
-  Farm farm = load("../input/input4.txt");
+  Farm farm = load("../input/input5.txt");
 
   
 
