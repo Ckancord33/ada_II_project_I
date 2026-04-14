@@ -36,6 +36,6 @@ public:
   tuple<int, vector<int>> dynamic_solution_top_down();
 
   //Acercamiento Bottom - Up
-  void fill_cost_matrix(vector<vector<int>> &, int, vector<vector<int>> &);
+  void fill_cost_matrix(vector<int> &, int,vector<int>&);
   tuple<int, vector<int>> dynamic_solution_bottom_up();
 };
