@@ -23,7 +23,7 @@ int main()
 
   // print_examples(); // Muestra la correctitud del codigo con los ejemplos del enunciado
 
-  Farm farm = load("../input/input3.txt");
+  Farm farm = load("../input/input5.txt");
 
   string title_dynamic_top_down = "------- solucion dinamica Bottom-Up -----------------";
   print_function_metrics(title_dynamic_top_down, [&]{ return farm.dynamic_solution_bottom_up(); });
