@@ -103,7 +103,7 @@ int Farm::calc_total_subset_time(int bitmask)
   return total_time;
 }
 
-int Farm::auxiliar_top_down(int bitmask, vector<int> &memo)
+int Farm::auxiliar_top_down(int bitmask, vector<int> &memo, int time)
 {
   if (memo[bitmask] != -1)
     return memo[bitmask];
@@ -112,8 +112,8 @@ int Farm::auxiliar_top_down(int bitmask, vector<int> &memo)
     int new_bitmask = bitmask;
     if(new_bitmask & (1 << i)){
       new_bitmask &= ~(1 << i);
-      int time = calc_total_subset_time(new_bitmask);
-      int cost = auxiliar_top_down(new_bitmask, memo) + plots[i].calc_cost(time);
+      int new_time = time - plots[i].get_tr();
+      int cost = auxiliar_top_down(new_bitmask, memo, new_time) + plots[i].calc_cost(new_time);
       min_cost = min(min_cost, cost);
     }
   }
@@ -159,7 +159,8 @@ tuple<int, vector<int>> Farm::dynamic_solution_top_down()
     memo[1 << i] = plots[i].calc_cost(0);
   }
   int init_bitmask = (1 << plots.size()) - 1;
-  int best_cost = auxiliar_top_down(init_bitmask, memo);
+  int total_time = calc_total_subset_time(init_bitmask);
+  int best_cost = auxiliar_top_down(init_bitmask, memo, total_time);
   vector<int> solution;
   build_solution_top_down(init_bitmask, memo, solution);
   return tuple<int, vector<int>>(best_cost, solution);

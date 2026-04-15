@@ -31,7 +31,7 @@ public:
 
   //Acercamiento Top - Down
   int calc_total_subset_time(int);
-  int auxiliar_top_down(int, vector<int> &);
+  int auxiliar_top_down(int, vector<int> &, int);
   void build_solution_top_down(int, vector<int>&, vector<int>&);
   tuple<int, vector<int>> dynamic_solution_top_down();
 
