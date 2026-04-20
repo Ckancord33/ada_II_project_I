@@ -1,26 +1,7 @@
 #include <iostream>
 #include "Farm.h"
 #include "Utils.h"
-
-template <typename F>
-void print_function_metrics(string title, F function)
-{ 
-  cout << "----------------------------------\n";
-  cout << title << "\n"
-       << endl;
-  auto solution_and_time = take_time([&]
-                                     { return function(); });
-
-  auto [solution, time] = solution_and_time; // desempaqueta la tupla externa
-  auto [cost, order] = solution;             // desempaqueta la tupla interna
-
-  cout << "La solucion es: ";
-  print_vector(order);
-  cout << "El costo es: " << cost << endl;
-  cout << "El tiempo fue: " << time << " microsegundos\n"
-       << endl;
-  cout << "----------------------------------\n";
-}
+#include "TerminalUI.h"
 
 int main(int argc, char *argv[])
 {
@@ -28,7 +9,8 @@ int main(int argc, char *argv[])
   if (argc < 2)
   {
     cerr << "Uso: main.exe <ruta_txt> [opcion]" << endl;
-    return 1;
+    run_terminal_ui(); 
+    return 0;
   }
 
   string path = argv[1];

@@ -26,3 +26,21 @@ tuple<tuple<int, vector<int>>, long long> take_time(F function)
       solution,
       chrono::duration_cast<chrono::microseconds>(end - start).count());
 }
+
+template <typename F>
+void print_function_metrics(string title, F function)
+{ 
+  cout << "-----------------------------\n";
+  cout << title << "\n" << endl;
+  auto solution_and_time = take_time([&]
+                                     { return function(); });
+
+  auto [solution, time] = solution_and_time; // desempaqueta la tupla externa
+  auto [cost, order] = solution;             // desempaqueta la tupla interna
+
+  cout << "La solucion es: ";
+  print_vector(order);
+  cout << "El costo es: " << cost << endl;
+  cout << "El tiempo fue: " << time << " microsegundos\n";
+  cout << "-----------------------------\n";
+}
