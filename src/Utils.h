@@ -5,15 +5,14 @@
 #include <chrono>
 #include <iostream>
 #include "Farm.h"
-#include <unordered_map>
+
+#include <iomanip> 
 
 Farm load(string);
 
 void print_vector(vector<int>);
 
 void print_examples();
-
-void print_map(const unordered_map<int, pair<int, vector<int>>>&);
 
 void print_matrix(const vector<vector<int>>);
 

@@ -110,24 +110,6 @@ void print_examples()
 }
 
 
-void print_map(const unordered_map<int, pair<int, vector<int>>>& mapa) {
-    cout << "--- CONTENIDO DEL MAPA ---" << endl;
-    
-    for (const auto& [clave, valor] : mapa) {
-        cout << "Clave: [" << clave << "]" << endl;
-        cout << "  - Valor entero: " << valor.first << endl;
-        cout << "  - Lista de numeros: { ";
-        
-        const vector<int>& lista = valor.second;
-        for (size_t i = 0; i < lista.size(); ++i) {
-            cout << lista[i] << (i < lista.size() - 1 ? ", " : "");
-        }
-        
-        cout << " }" << endl;
-        cout << "--------------------------" << endl;
-    }
-}
-
 void print_matrix(const vector<vector<int>> matriz){
   int number = 0;
  for (int i = 0; i < matriz.size(); i++) {
@@ -146,3 +128,5 @@ void print_matrix(const vector<vector<int>> matriz){
         cout << endl; 
     }
 }
+
+
