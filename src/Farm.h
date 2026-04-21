@@ -23,8 +23,7 @@ public:
   //Funciones para la solucion ingenua
   vector<int> delete_position(vector<int>, int);
   vector<int> add_element(vector<int>, int);
-  void generate(vector<int>, vector<int>, vector<vector<int>> &);
-  vector<vector<int>> get_permutations(int);
+  void generate(vector<int>, vector<int>, vector<int> &, int&);
   tuple<int, vector<int>> naive_solution();
 
   //Funciones para la solucion dinamica

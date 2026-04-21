@@ -45,48 +45,36 @@ vector<int> Farm::add_element(vector<int> original, int element)
   return original;
 }
 
-void Farm::generate(vector<int> remaining, vector<int> current, vector<vector<int>> &permutations)
+void Farm::generate(vector<int> remaining, vector<int> current, vector<int>& best_solution, int& best_cost)
 {
   if (remaining.size() == 0)
   {
-    permutations.push_back(current);
+    int new_cost = calc_total_cost(current);
+    if(new_cost < best_cost){
+      best_cost = new_cost;
+      best_solution = current;
+    }
     return;
   }
 
   for (int i = 0; i < remaining.size(); i++)
   {
     int next = remaining[i];
-    generate(delete_position(remaining, i), add_element(current, next), permutations);
+    generate(delete_position(remaining, i), add_element(current, next), best_solution, best_cost);
   }
-}
-
-vector<vector<int>> Farm::get_permutations(int n)
-{
-  vector<int> init(n, 0);
-  for (int i = 0; i < n; i++)
-  {
-    init[i] = i;
-  }
-  vector<vector<int>> permutations;
-  generate(init, {}, permutations);
-  return permutations;
 }
 
 tuple<int, vector<int>> Farm::naive_solution()
 {
   int n = plots.size();
-  vector<vector<int>> all_orders = get_permutations(n);
+  vector<int> init(n, 0);
+  for (int i = 0; i < n; i++)
+  {
+    init[i] = i;
+  }
   vector<int> best_solution;
   int best_cost = INT_MAX;
-  for (vector<int> order : all_orders)
-  {
-    int new_cost = calc_total_cost(order);
-    if (new_cost < best_cost)
-    {
-      best_cost = new_cost;
-      best_solution = order;
-    }
-  }
+  generate(init, {}, best_solution, best_cost);
   return tuple<int, vector<int>>(best_cost, best_solution);
 }
 
