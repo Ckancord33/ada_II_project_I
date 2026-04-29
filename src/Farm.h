@@ -12,6 +12,7 @@ class Farm
 
 private:
   vector<Plot> plots;
+  double calc_greedy_score(int, int);
 
 public:
 
@@ -37,4 +38,7 @@ public:
   //Acercamiento Bottom - Up
   void fill_cost_matrix(vector<int> &, int,vector<int>&);
   tuple<int, vector<int>> dynamic_solution_bottom_up();
+
+  //Solucion voraz
+  tuple<int, vector<int>> greedy_solution();
 };

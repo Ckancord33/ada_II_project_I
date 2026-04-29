@@ -13,6 +13,9 @@ class Plot{
     Plot(int, int, int, int);
     int calc_cost(int);
     int get_tr();
+    int get_ts();
+    int get_p();
+    int get_rp();
     
 
 };

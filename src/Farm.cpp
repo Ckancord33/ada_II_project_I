@@ -219,3 +219,62 @@ tuple<int, vector<int>> Farm::dynamic_solution_bottom_up()
 
   return tuple<int, vector<int>>(minCost, solution);
 }
+
+double Farm::calc_greedy_score(int idx, int current_time)
+{
+  int ts = plots[idx].get_ts();
+  int tr = plots[idx].get_tr();
+  int p = plots[idx].get_p();
+  int rp = plots[idx].get_rp();
+
+  int slack = ts - (current_time + tr);
+
+  if (slack <= 0)
+  {
+    return 1000000 + (static_cast<double>(p) * abs(slack));
+  }
+
+  double bonus = (current_time == rp) ? 10.0 : 1.0;
+  return (static_cast<double>(p) * bonus) / static_cast<double>(slack);
+}
+
+tuple<int, vector<int>> Farm::greedy_solution()
+{
+  int n = plots.size();
+  vector<int> remaining(n);
+  for (int i = 0; i < n; i++)
+  {
+    remaining[i] = i;
+  }
+
+  vector<int> solution;
+  solution.reserve(n);
+
+  int current_time = 0;
+
+  while (!remaining.empty())
+  {
+    int best_pos = 0;
+    double best_score = calc_greedy_score(remaining[0], current_time);
+
+    for (int i = 1; i < remaining.size(); i++)
+    {
+      int candidate = remaining[i];
+      double candidate_score = calc_greedy_score(candidate, current_time);
+
+      if (candidate_score > best_score)
+      {
+        best_score = candidate_score;
+        best_pos = i;
+      }
+    }
+
+    int chosen_plot = remaining[best_pos];
+    solution.push_back(chosen_plot);
+    current_time += plots[chosen_plot].get_tr();
+    remaining.erase(remaining.begin() + best_pos);
+  }
+
+  int total_cost = calc_total_cost(solution);
+  return tuple<int, vector<int>>(total_cost, solution);
+}

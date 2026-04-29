@@ -36,11 +36,12 @@ int main(int argc, char *argv[])
     }
     else if (opcion == "greedy solution")
     {
-      cout << "Impelementacion proximantente" << endl;
+      print_function_metrics("Resultados de la solución voraz", [&]()
+                             { return myFarm.greedy_solution(); });
     }
     else
     {
-      cout << "Eliga un algoritmo correcto" << endl;
+      cout << "Elija un algoritmo correcto" << endl;
     }
   }
   catch (const exception &e)

@@ -32,3 +32,6 @@ int Plot::calc_cost(int t)
 }
 
 int Plot::get_tr(){return tr;}
+int Plot::get_ts(){return ts;}
+int Plot::get_p(){return p;}
+int Plot::get_rp(){return rp;}
