@@ -27,6 +27,9 @@ public:
   void generate(vector<int>, vector<int>, vector<int> &, int&);
   tuple<int, vector<int>> naive_solution();
 
+  tuple<int, vector<int>> bad_naive_solution();
+  void bad_generate(vector<int>, vector<int>, vector<int> &, int&);
+
   //Funciones para la solucion dinamica
 
   //Acercamiento Top - Down

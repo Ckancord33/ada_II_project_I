@@ -24,6 +24,11 @@ int main(int argc, char *argv[])
       print_function_metrics("Resultados de la solución ingenua", [&]()
                              { return myFarm.naive_solution(); });
     }
+    else if (opcion == "bad naive solution")
+    {
+      print_function_metrics("Resultados de la peor solucion con programación ingenua", [&]()
+                             { return myFarm.bad_naive_solution(); });
+    }
     else if (opcion == "dynamic solution (bottom up)")
     {
       print_function_metrics("Resultados de la solución con programación dinamica \n(Bottom Up)", [&]()

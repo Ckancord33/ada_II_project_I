@@ -2,7 +2,13 @@
 
 Plot parsePlot(const string &line)
 {
-  stringstream ss(line);
+  string modifiedLine = line;
+  for (char &c : modifiedLine)
+  {
+    if (c == ',')
+      c = ' ';
+  }
+  stringstream ss(modifiedLine);
   int ts, tr, p, rp;
   if (!(ss >> ts >> tr >> p >> rp))
   {
