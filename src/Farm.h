@@ -15,33 +15,38 @@ private:
   double calc_greedy_score(int, int);
 
 public:
-
-  //Funciones del problema
+  // Funciones del problema
   Farm(vector<Plot>);
   vector<int> calc_schedule(vector<int>);
   int calc_total_cost(vector<int>);
 
-  //Funciones para la solucion ingenua
+  // Funciones para la solucion ingenua
   vector<int> delete_position(vector<int>, int);
   vector<int> add_element(vector<int>, int);
-  void generate(vector<int>, vector<int>, vector<int> &, int&);
+  void generate(vector<int>, vector<int>, vector<int> &, int &);
   tuple<int, vector<int>> naive_solution();
 
+  // Encuentra la peor solucion de forma ingenua
   tuple<int, vector<int>> bad_naive_solution();
-  void bad_generate(vector<int>, vector<int>, vector<int> &, int&);
+  void bad_generate(vector<int>, vector<int>, vector<int> &, int &);
 
-  //Funciones para la solucion dinamica
+  // Funciones para la solucion dinamica
 
-  //Acercamiento Top - Down
+  // Acercamiento Top - Down
   int calc_total_subset_time(int);
   int auxiliar_top_down(int, vector<int> &, int);
-  void build_solution_top_down(int, vector<int>&, vector<int>&, int);
+  void build_solution_top_down(int, vector<int> &, vector<int> &, int);
   tuple<int, vector<int>> dynamic_solution_top_down();
 
-  //Acercamiento Bottom - Up
-  void fill_cost_matrix(vector<int> &, int,vector<int>&);
+  // Encuentra la peor solucion de forma dinamica
+  int bad_auxiliar_top_down(int, vector<int> &, int);
+  void bad_build_solution_top_down(int, vector<int> &, vector<int> &, int);
+  tuple<int, vector<int>> bad_dynamic_solution();
+
+  // Acercamiento Bottom - Up
+  void fill_cost_matrix(vector<int> &, int, vector<int> &);
   tuple<int, vector<int>> dynamic_solution_bottom_up();
 
-  //Solucion voraz
+  // Solucion voraz
   tuple<int, vector<int>> greedy_solution();
 };

@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
   if (argc < 2)
   {
     cerr << "Uso: main.exe <ruta_txt> [opcion]" << endl;
-    run_terminal_ui(); 
+    run_terminal_ui();
     return 0;
   }
 
@@ -28,6 +28,11 @@ int main(int argc, char *argv[])
     {
       print_function_metrics("Resultados de la peor solucion con programación ingenua", [&]()
                              { return myFarm.bad_naive_solution(); });
+    }
+    else if (opcion == "bad dynamic solution")
+    {
+      print_function_metrics("Resultados de la peor solucion con programación dinamica \n(Top Down)", [&]()
+                             { return myFarm.bad_dynamic_solution(); });
     }
     else if (opcion == "dynamic solution (bottom up)")
     {

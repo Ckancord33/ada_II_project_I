@@ -45,12 +45,13 @@ vector<int> Farm::add_element(vector<int> original, int element)
   return original;
 }
 
-void Farm::generate(vector<int> remaining, vector<int> current, vector<int>& best_solution, int& best_cost)
+void Farm::generate(vector<int> remaining, vector<int> current, vector<int> &best_solution, int &best_cost)
 {
   if (remaining.size() == 0)
   {
     int new_cost = calc_total_cost(current);
-    if(new_cost < best_cost){
+    if (new_cost < best_cost)
+    {
       best_cost = new_cost;
       best_solution = current;
     }
@@ -64,13 +65,13 @@ void Farm::generate(vector<int> remaining, vector<int> current, vector<int>& bes
   }
 }
 
-
-void Farm::bad_generate(vector<int> remaining, vector<int> current, vector<int>& worst_solution, int& worst_cost)
+void Farm::bad_generate(vector<int> remaining, vector<int> current, vector<int> &worst_solution, int &worst_cost)
 {
   if (remaining.size() == 0)
   {
     int new_cost = calc_total_cost(current);
-    if(new_cost > worst_cost){
+    if (new_cost > worst_cost)
+    {
       worst_cost = new_cost;
       worst_solution = current;
     }
@@ -185,39 +186,100 @@ tuple<int, vector<int>> Farm::dynamic_solution_top_down()
   return tuple<int, vector<int>>(best_cost, solution);
 }
 
+int Farm::bad_auxiliar_top_down(int bitmask, vector<int> &memo, int time)
+{
+  if (memo[bitmask] != -1)
+    return memo[bitmask];
+  int max_cost = INT_MIN;
+  for (int sub = bitmask; sub > 0; sub &= (sub - 1))
+  {
+    int i = __builtin_ctz(sub);
+    int new_bitmask = bitmask & ~(1 << i);
+    int new_time = time - plots[i].get_tr();
+    int cost = bad_auxiliar_top_down(new_bitmask, memo, new_time) + plots[i].calc_cost(new_time);
+    max_cost = max(max_cost, cost);
+  }
+  memo[bitmask] = max_cost;
+  return memo[bitmask];
+}
 
-void Farm::fill_cost_matrix(vector<int>& cost_vector, int row, vector<int>& path)
+void Farm::bad_build_solution_top_down(int bitmask, vector<int> &memo, vector<int> &solution, int time)
+{
+  if (bitmask == 0)
+  {
+    return;
+  }
+  int idx = -1;
+  int max_cost = INT_MIN;
+  int best_bitmask = -1;
+  int best_time = time;
+  for (int sub = bitmask; sub > 0; sub &= (sub - 1))
+  {
+    int i = __builtin_ctz(sub);
+    int new_bitmask = bitmask & ~(1 << i);
+    int new_time = time - plots[i].get_tr();
+    int cost = memo[new_bitmask] + plots[i].calc_cost(new_time);
+    if (cost > max_cost)
+    {
+      max_cost = cost;
+      idx = i;
+      best_bitmask = new_bitmask;
+      best_time = new_time;
+    }
+  }
+  solution.insert(solution.begin(), idx);
+  bad_build_solution_top_down(best_bitmask, memo, solution, best_time);
+}
+
+tuple<int, vector<int>> Farm::bad_dynamic_solution()
+{
+  int n = plots.size();
+  vector<int> memo(1 << plots.size(), -1);
+  memo[0] = 0;
+  for (int i = 0; i < plots.size(); i++)
+  {
+    memo[1 << i] = plots[i].calc_cost(0);
+  }
+  int init_bitmask = (1 << plots.size()) - 1;
+  int total_time = calc_total_subset_time(init_bitmask);
+  int worst_cost = bad_auxiliar_top_down(init_bitmask, memo, total_time);
+  vector<int> solution;
+  bad_build_solution_top_down(init_bitmask, memo, solution, total_time);
+  return tuple<int, vector<int>>(worst_cost, solution);
+}
+
+void Farm::fill_cost_matrix(vector<int> &cost_vector, int row, vector<int> &path)
 {
 
   vector<int> temp_total_matrix(row);
   bool firstTime = true;
   int pos = 0, temp = 0, current_cost = 0;
 
-  for(int i = 1; i < row; i++){
+  for (int i = 1; i < row; i++)
+  {
 
-      firstTime = true;
-      for(int sub = i; sub ; sub &= (sub - 1)){
-        pos = __builtin_ctz(sub);
-        temp = i & ~(1 << pos);
-        
-        
-        if (firstTime){
-          temp_total_matrix[i] = temp_total_matrix[temp] + plots[pos].get_tr();
-          firstTime = false;
-        }
+    firstTime = true;
+    for (int sub = i; sub; sub &= (sub - 1))
+    {
+      pos = __builtin_ctz(sub);
+      temp = i & ~(1 << pos);
 
-        current_cost = cost_vector[temp] + plots[pos].calc_cost(temp_total_matrix[temp]);
+      if (firstTime)
+      {
+        temp_total_matrix[i] = temp_total_matrix[temp] + plots[pos].get_tr();
+        firstTime = false;
+      }
 
-        if (current_cost < cost_vector[i]){
-            cost_vector[i] = current_cost;
-            path[i] = pos;
-        }
+      current_cost = cost_vector[temp] + plots[pos].calc_cost(temp_total_matrix[temp]);
 
+      if (current_cost < cost_vector[i])
+      {
+        cost_vector[i] = current_cost;
+        path[i] = pos;
+      }
     }
-
   }
 }
-
 
 vector<int> build_solution_bottom_up(vector<int> path, int row)
 {
@@ -225,9 +287,10 @@ vector<int> build_solution_bottom_up(vector<int> path, int row)
   int last_opc = row - 1, last_plot = 0;
   vector<int> solution;
 
-  while (last_opc > 0){
+  while (last_opc > 0)
+  {
     last_plot = path[last_opc];
-    solution.insert(solution.begin(),last_plot);
+    solution.insert(solution.begin(), last_plot);
     last_opc &= ~(1 << last_plot);
   }
 
@@ -240,16 +303,16 @@ tuple<int, vector<int>> Farm::dynamic_solution_bottom_up()
   int n = plots.size();
   int row = 1 << n;
 
-  vector<int> cost_vector(row,inf);
+  vector<int> cost_vector(row, inf);
   cost_vector[0] = 0;
 
-  vector<int> path(row,-1);
+  vector<int> path(row, -1);
 
-  fill_cost_matrix(cost_vector,row,path);
+  fill_cost_matrix(cost_vector, row, path);
 
   vector<int> solution = build_solution_bottom_up(path, row);
 
-  int minCost = cost_vector[row-1];
+  int minCost = cost_vector[row - 1];
 
   return tuple<int, vector<int>>(minCost, solution);
 }
