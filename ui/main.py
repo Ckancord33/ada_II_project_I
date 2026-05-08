@@ -77,7 +77,7 @@ text_area.grid(row=1, column=0,padx=10,sticky="nsew")
 
 # Sección 3: Opción 
 tk.Label(root, text="Selecciona una algoritmo:").grid(row=0, column=2,padx=10,pady=30)
-combo_opcion = ttk.Combobox(root, values=["naive solution", "bad naive solution", "bad dynamic solution", "dynamic solution (bottom up)", "dynamic solution (top down)", "greedy solution"], state="readonly")
+combo_opcion = ttk.Combobox(root, values=["naive solution", "bad dynamic solution", "dynamic solution (bottom up)", "dynamic solution (top down)", "greedy solution"], state="readonly")
 combo_opcion.current(0) # Valor por defecto
 combo_opcion.grid(row=1, column=2,padx=10)
 

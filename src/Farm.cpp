@@ -65,26 +65,6 @@ void Farm::generate(vector<int> remaining, vector<int> current, vector<int> &bes
   }
 }
 
-void Farm::bad_generate(vector<int> remaining, vector<int> current, vector<int> &worst_solution, int &worst_cost)
-{
-  if (remaining.size() == 0)
-  {
-    int new_cost = calc_total_cost(current);
-    if (new_cost > worst_cost)
-    {
-      worst_cost = new_cost;
-      worst_solution = current;
-    }
-    return;
-  }
-
-  for (int i = 0; i < remaining.size(); i++)
-  {
-    int next = remaining[i];
-    bad_generate(delete_position(remaining, i), add_element(current, next), worst_solution, worst_cost);
-  }
-}
-
 tuple<int, vector<int>> Farm::naive_solution()
 {
   int n = plots.size();
@@ -97,20 +77,6 @@ tuple<int, vector<int>> Farm::naive_solution()
   int best_cost = INT_MAX;
   generate(init, {}, best_solution, best_cost);
   return tuple<int, vector<int>>(best_cost, best_solution);
-}
-
-tuple<int, vector<int>> Farm::bad_naive_solution()
-{
-  int n = plots.size();
-  vector<int> init(n, 0);
-  for (int i = 0; i < n; i++)
-  {
-    init[i] = i;
-  }
-  vector<int> worst_solution;
-  int worst_cost = 0;
-  bad_generate(init, {}, worst_solution, worst_cost);
-  return tuple<int, vector<int>>(worst_cost, worst_solution);
 }
 
 int Farm::calc_total_subset_time(int bitmask)
