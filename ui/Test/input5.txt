@@ -1,9 +1,9 @@
 6
-8 3 2 1
-8 3 2 1
-8 3 2 1
-8 3 2 1
-8 3 2 1
-8 3 2 1
+8,3,2,1
+8,3,2,1
+8,3,2,1
+8,3,2,1
+8,3,2,1
+8,3,2,1
 
 # Tablones idénticos  todas las permutaciones dan igual

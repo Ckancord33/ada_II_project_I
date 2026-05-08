@@ -1,4 +1,4 @@
 1
-5 2 1 0
+5,2,1,0
 
 # Solo existe una permutación posible. Los tres algoritmos deben coincidir exactamente.
