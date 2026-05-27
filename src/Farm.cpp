@@ -341,3 +341,79 @@ tuple<int, vector<int>> Farm::greedy_solution()
   int total_cost = calc_total_cost(solution);
   return tuple<int, vector<int>>(total_cost, solution);
 }
+
+tuple<int, vector<int>> Farm::greedy_solution_buckets(int bucket_count)
+{
+  int n = plots.size();
+  if (n == 0)
+  {
+    return tuple<int, vector<int>>(0, {});
+  }
+
+  int min_u = INT_MAX;
+  int max_u = INT_MIN;
+  for (int i = 0; i < n; i++)
+  {
+    int u = plots[i].get_ts() - plots[i].get_tr();
+    min_u = min(min_u, u);
+    max_u = max(max_u, u);
+  }
+
+  int range = max_u - min_u + 1;
+  if (bucket_count < 1)
+  {
+    bucket_count = 1;
+  }
+  if (bucket_count > range)
+  {
+    bucket_count = range;
+  }
+
+  int bucket_span = (range + bucket_count - 1) / bucket_count;
+  int total_buckets = 4 * bucket_count;
+  vector<vector<int>> buckets(total_buckets);
+
+  for (int i = 0; i < n; i++)
+  {
+    int u = plots[i].get_ts() - plots[i].get_tr();
+    int bucket_idx = (u - min_u) / bucket_span;
+    if (bucket_idx < 0)
+    {
+      bucket_idx = 0;
+    }
+    if (bucket_idx >= bucket_count)
+    {
+      bucket_idx = bucket_count - 1;
+    }
+    int p = plots[i].get_p();
+    if (p < 1)
+    {
+      p = 1;
+    }
+    if (p > 4)
+    {
+      p = 4;
+    }
+    int combined_idx = (p - 1) * bucket_count + bucket_idx;
+    buckets[combined_idx].push_back(i);
+  }
+
+  vector<int> solution;
+  solution.reserve(n);
+
+  for (int p = 4; p >= 1; p--)
+  {
+    int base = (p - 1) * bucket_count;
+    for (int b = 0; b < bucket_count; b++)
+    {
+      int idx = base + b;
+      for (int i = 0; i < buckets[idx].size(); i++)
+      {
+        solution.push_back(buckets[idx][i]);
+      }
+    }
+  }
+
+  int total_cost = calc_total_cost(solution);
+  return tuple<int, vector<int>>(total_cost, solution);
+}
