@@ -1,0 +1,40 @@
+35
+20, 5, 2, 10
+15, 3, 4, 0
+30, 6, 1, 15
+12, 4, 3, 5
+25, 5, 2, 20
+18, 3, 4, 10
+22, 4, 1, 12
+40, 8, 2, 30
+14, 2, 3, 5
+28, 5, 4, 20
+35, 7, 1, 25
+16, 3, 2, 8
+24, 4, 3, 15
+50, 10, 4, 35
+11, 2, 1, 5
+33, 6, 2, 22
+19, 4, 3, 10
+27, 5, 4, 18
+45, 9, 1, 30
+13, 2, 2, 8
+21, 4, 3, 12
+38, 7, 4, 28
+17, 3, 1, 10
+29, 6, 2, 20
+42, 8, 3, 30
+15, 3, 4, 5
+26, 5, 1, 18
+31, 6, 2, 22
+20, 4, 3, 12
+48, 9, 4, 35
+12, 2, 1, 6
+36, 7, 2, 25
+23, 5, 3, 15
+39, 8, 4, 28
+14, 3, 1, 8
+
+# Diseñado para llevar al límite la pila de 
+# llamadas en la implementación de Programación Dinámica Top-Down (riesgo de Stack Overflow). Demuestra empíricamente 
+# la intratabilidad temporal de la Fuerza Bruta (O(n!)) ante conjuntos de datos de tamaño intermedio-alto.

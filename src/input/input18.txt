@@ -1,0 +1,45 @@
+40
+10, 2, 1, 5
+12, 3, 2, 6
+15, 2, 4, 10
+18, 4, 3, 12
+20, 5, 2, 12
+22, 3, 1, 15
+25, 6, 4, 18
+28, 4, 3, 20
+30, 5, 2, 22
+32, 7, 1, 20
+35, 6, 4, 25
+38, 8, 3, 28
+40, 5, 2, 30
+42, 9, 1, 30
+45, 6, 4, 35
+48, 7, 3, 38
+50, 8, 2, 40
+11, 2, 1, 7
+14, 3, 4, 9
+17, 4, 3, 11
+19, 2, 2, 14
+23, 5, 1, 16
+26, 6, 4, 19
+29, 4, 3, 21
+31, 7, 2, 22
+34, 5, 1, 25
+37, 8, 4, 27
+39, 6, 3, 30
+41, 9, 2, 28
+44, 5, 1, 35
+47, 8, 4, 37
+49, 7, 3, 40
+13, 3, 2, 8
+16, 4, 1, 10
+21, 5, 4, 14
+24, 6, 3, 15
+27, 4, 2, 20
+33, 7, 1, 24
+36, 5, 4, 28
+43, 8, 3, 32
+
+# Introduce un volumen de datos superior con alta varianza en prioridades y 
+# holguras de tiempo. Su propósito es saturar la tabla de estados en la Programación Dinámica Bottom-Up para evaluar 
+# su complejidad espacial, y comparar su rendimiento frente a la rapidez de ejecución del Algoritmo Voraz.

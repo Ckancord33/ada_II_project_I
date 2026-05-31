@@ -1,0 +1,30 @@
+26
+5, 7, 1, 0
+6, 8, 1, 1
+4, 6, 1, 0
+7, 9, 1, 2
+5, 8, 1, 1
+6, 7, 1, 2
+9, 8, 4, 1
+10, 9, 4, 2
+11, 9, 4, 3
+10, 8, 4, 2
+12, 10, 4, 3
+13, 11, 4, 4
+30, 4, 2, 10
+28, 5, 2, 12
+25, 3, 3, 8
+26, 4, 3, 9
+24, 2, 2, 7
+22, 3, 2, 6
+20, 2, 3, 5
+18, 2, 2, 5
+35, 6, 1, 15
+33, 5, 1, 14
+32, 4, 1, 13
+40, 7, 2, 18
+38, 6, 2, 17
+36, 5, 2, 16
+
+# Caso: el voraz prioriza slack<=0 como absoluto y puede atrasar tablones p=4 con poco slack.
+# Se espera que la dinamica encuentre mejor orden al atender primero p alta con slack positivo.

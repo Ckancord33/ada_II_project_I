@@ -1,0 +1,14 @@
+10
+15, 3, 4, 2
+20, 4, 2, 5
+10, 2, 1, 0
+25, 5, 3, 10
+12, 2, 4, 5
+30, 6, 2, 15
+18, 3, 1, 8
+22, 4, 3, 10
+14, 2, 4, 4
+16, 3, 2, 5
+
+# Representa una finca pequeña. Evalúa que los tres algoritmos (Fuerza Bruta, Voraz y Programación Dinámica) 
+# converjan rápidamente y entreguen el mismo costo óptimo.
