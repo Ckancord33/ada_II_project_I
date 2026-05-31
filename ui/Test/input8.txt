@@ -1,0 +1,17 @@
+12
+15, 3, 2, 5
+20, 4, 2, 10
+12, 2, 2, 2
+18, 3, 2, 8
+25, 5, 2, 15
+14, 3, 2, 4
+16, 2, 2, 6
+22, 4, 2, 12
+10, 2, 2, 0
+24, 4, 2, 14
+19, 3, 2, 9
+21, 4, 2, 11
+
+# Todos los tablones tienen la misma prioridad (p=2). 
+# Este caso evalúa la lógica de desempate interno del algoritmo voraz, 
+# obligando a que la decisión dependa exclusivamente de rp o (ts - tr).

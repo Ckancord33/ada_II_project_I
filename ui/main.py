@@ -2,7 +2,10 @@ import tkinter as tk
 from tkinter import messagebox, ttk, filedialog
 import subprocess
 import os
-from utils import centrar_ventana, ajustar_alto_segun_contenido,limpiar_todo
+from utils import centrar_ventana, ajustar_alto_segun_contenido,limpiar_todo, create_solution_file
+
+# Guarda la ruta del archivo abierto por el usuario (si hay)
+last_input_path = None
     
 def seleccionar_y_leer():
     # Obtener la ruta del archivo
@@ -16,6 +19,9 @@ def seleccionar_y_leer():
             text_area.delete("1.0", tk.END)
             text_area.insert("1.0", contenido_string)
             ajustar_alto_segun_contenido(text_area)
+            # recordar ruta seleccionada
+            global last_input_path
+            last_input_path = ruta
             
             root.geometry("") 
             centrar_ventana(root)
@@ -53,6 +59,12 @@ def enviar_todo():
             
             root.geometry("") 
             centrar_ventana(root)
+            # Crear archivo de solución simple usando la lógica en utils.py
+            try:
+                input_for_name = last_input_path or ruta_txt
+                created = create_solution_file(salida_completa, input_for_name, opcion_seleccionada)
+            except Exception as e:
+                messagebox.showwarning("No se pudo crear archivo", str(e))
             
         else:
             messagebox.showerror("Error C++", proceso.stderr)
@@ -77,7 +89,7 @@ text_area.grid(row=1, column=0,padx=10,sticky="nsew")
 
 # Sección 3: Opción 
 tk.Label(root, text="Selecciona una algoritmo:").grid(row=0, column=2,padx=10,pady=30)
-combo_opcion = ttk.Combobox(root, values=["naive solution", "bad dynamic solution", "dynamic solution (bottom up)", "dynamic solution (top down)", "greedy solution"], state="readonly")
+combo_opcion = ttk.Combobox(root, values=["naive solution","dynamic solution (bottom up)", "dynamic solution (top down)", "greedy solution"], state="readonly")
 combo_opcion.current(0) # Valor por defecto
 combo_opcion.grid(row=1, column=2,padx=10)
 
