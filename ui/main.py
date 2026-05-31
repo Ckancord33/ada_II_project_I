@@ -9,7 +9,8 @@ last_input_path = None
     
 def seleccionar_y_leer():
     # Obtener la ruta del archivo
-    ruta = filedialog.askopenfilename()
+    directorio_inicial = os.path.join(os.getcwd(), 'Test')
+    ruta = filedialog.askopenfilename(initialdir=directorio_inicial)
 
     if ruta:
         try:
@@ -35,19 +36,42 @@ def enviar_todo():
     contenido_txt = text_area.get("1.0", tk.END).strip()
     opcion_seleccionada = combo_opcion.get()
 
-    # 1. Crear el archivo temporal
-    ruta_txt = "temp_input.txt"
-    with open(ruta_txt, "w") as f:
+    # 1. Crear el archivo temporal en el directorio de la UI
+    import os
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    ruta_txt = os.path.join(base_dir, "temp_input.txt")
+    with open(ruta_txt, "w", encoding='utf-8') as f:
         f.write(contenido_txt)
 
-    # 2. Ruta del binario
-    ruta_exe = os.path.join("..","bin", "main")
+    # 2. Ruta del binario de manera robusta
+    ruta_exe_base = os.path.join(base_dir, "..", "bin", "main")
+
+    if os.name == 'nt' and os.path.exists(ruta_exe_base + ".exe"):
+        ruta_exe = ruta_exe_base + ".exe"
+    else:
+        ruta_exe = ruta_exe_base
+    
+    # Comprobar si el archivo existe antes de ejecutar para dar un error más claro
+    if not os.path.exists(ruta_exe):
+        messagebox.showerror("Error", f"No se encontró el ejecutable en: {os.path.abspath(ruta_exe)}")
+        return
 
     try:
+        command = []
+        if os.name == 'nt' and not ruta_exe.endswith('.exe'):
+            command.append("wsl")
+            
+        ruta_exe_relativa = os.path.relpath(ruta_exe, base_dir).replace("\\", "/")
+        ruta_txt_relativa = "temp_input.txt"
+        
+        command.extend([ruta_exe_relativa, ruta_txt_relativa, opcion_seleccionada])
+
         proceso = subprocess.run(
-            [ruta_exe, ruta_txt, opcion_seleccionada],
+            command,
+            cwd=base_dir,
             capture_output=True,
-            text=True
+            text=True,
+            encoding='utf-8'
         )
 
         if proceso.returncode == 0:
@@ -89,7 +113,7 @@ text_area.grid(row=1, column=0,padx=10,sticky="nsew")
 
 # Sección 3: Opción 
 tk.Label(root, text="Selecciona una algoritmo:").grid(row=0, column=2,padx=10,pady=30)
-combo_opcion = ttk.Combobox(root, values=["naive solution", "bad dynamic solution", "dynamic solution (bottom up)", "dynamic solution (top down)", "greedy solution", "greedy solution (buckets)"], state="readonly")
+combo_opcion = ttk.Combobox(root, values=["naive solution", "dynamic solution (bottom up)", "dynamic solution (top down)", "greedy solution", "greedy solution (buckets)"], state="readonly")
 combo_opcion.current(0) # Valor por defecto
 combo_opcion.grid(row=1, column=2,padx=10)
 
