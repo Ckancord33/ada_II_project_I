@@ -44,6 +44,11 @@ int main(int argc, char *argv[])
       print_function_metrics("Resultados de la solución voraz", [&]()
                              { return myFarm.greedy_solution(); });
     }
+    else if (opcion == "greedy solution (buckets)")
+    {
+      print_function_metrics("Resultados de la solución voraz (Buckets)", [&]()
+                             { return myFarm.greedy_solution_buckets(); });
+    }
     else
     {
       cout << "Elija un algoritmo correcto" << endl;

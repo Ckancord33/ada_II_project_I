@@ -191,9 +191,10 @@ void run_solver_menu(const fs::path &file_path)
   std::cout << "  2) Programacion dinamica Top-Down\n";
   std::cout << "  3) Programacion dinamica Bottom-Up\n";
   std::cout << "  4) Solucion voraz\n";
+  std::cout << "  5) Solucion voraz (Buckets)\n";
   std::cout << "  0) Volver\n\n";
 
-  int option = read_int_in_range("Tu opcion: ", 0, 4);
+  int option = read_int_in_range("Tu opcion: ", 0, 5);
 
   if (option == 0)
   {
@@ -222,6 +223,11 @@ void run_solver_menu(const fs::path &file_path)
   {
     run_and_print_metrics("Resultado - Voraz", [&]
                           { return farm.greedy_solution(); });
+  }
+  else if (option == 5)
+  {
+    run_and_print_metrics("Resultado - Voraz (Buckets)", [&]
+                          { return farm.greedy_solution_buckets(); });
   }
 
   pause_for_enter();

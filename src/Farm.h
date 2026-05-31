@@ -45,4 +45,5 @@ public:
 
   // Solucion voraz
   tuple<int, vector<int>> greedy_solution();
+  tuple<int, vector<int>> greedy_solution_buckets(int bucket_count = 16);
 };
