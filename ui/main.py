@@ -9,7 +9,8 @@ last_input_path = None
     
 def seleccionar_y_leer():
     # Obtener la ruta del archivo
-    directorio_inicial = os.path.join(os.getcwd(), 'Test')
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    directorio_inicial = os.path.join(base_dir, 'Test')
     ruta = filedialog.askopenfilename(initialdir=directorio_inicial)
 
     if ruta:
